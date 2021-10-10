@@ -34,6 +34,7 @@ exports.signup = async (req, res) => {
           return res.status(400).json({ message: 'Cannot create user', err });
         }
         const { _id , firstName , email} = user;
+        // console.log('user created')
         return res.status(200).json({ message: 'User created', 
         user:  { _id , firstName , email} });
       }
@@ -63,8 +64,9 @@ exports.login =  async (req, res) => {
 
     const { _id , firstName , email} = user;
     const token = jwt.sign({ _id , email}, req.app.get('secretkey') , {
-      expiresIn: '1h' 
+      expiresIn: '5d' 
     }) 
+    // console.log('sign in success', token)
     return res.status(200).json({ message: 'Login Successfull' , user:  { _id , firstName , email} , token: token});
 
   } catch (e) {

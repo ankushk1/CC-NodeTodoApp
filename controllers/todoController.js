@@ -3,7 +3,6 @@ const User = require('../model/User');
 
 exports.createTodo = async (req, res) => {
   try {
-    console.log(req.body.userId);
     await Todo.create(
       {
         text: req.body.text,
@@ -36,12 +35,12 @@ exports.getTodos = async (req, res) => {
   } catch (e) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
-};
+};     
 
 exports.getTodosByUser = async (req, res) => {
   try {
     const todos = await Todo.find({ created_by: req.body.userId });
-    if (todos.length == 0) {
+    if (todos.length == 0) { 
       res.status(200).json({ message: 'No todos found' });
     }
     const user = await User.findOne({ _id: req.body.userId });
@@ -50,7 +49,7 @@ exports.getTodosByUser = async (req, res) => {
       const { _id, text, date } = todo;
       return { _id, text, date, created_by: user };
     });
-    return res.status(200).json({ todos: todoArr , message:"All todos by user"});
+    return res.status(200).json({ todos: todoArr});
   } catch (e) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
@@ -62,7 +61,8 @@ exports.updateTodo = async (req, res) => {
     Todo.findByIdAndUpdate(
       ID,
       {
-        text: req.body.text
+        text: req.body.text,
+        date: req.body.date
       },
       (err, todo) => {
         if (err) {
