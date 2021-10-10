@@ -7,9 +7,10 @@ const userRoutes = require('./routes/userRoutes');
 const todoRoutes = require('./routes/todoRoutes');
 const cors = require('cors');
 
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
 app.use('/user', userRoutes);
 app.use('/', todoRoutes);
